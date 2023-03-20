@@ -17,5 +17,5 @@ app.use(express.json());
 app.use('/currencies', currencyRouter);
 
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Server is listening on ${port}`);
 });
