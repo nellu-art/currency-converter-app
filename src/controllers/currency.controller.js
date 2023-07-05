@@ -1,5 +1,5 @@
-import { createPage } from './page.controller.js';
-import { startBrowser } from './browser.controller.js';
+import { createPage } from '../browser/createPage.js';
+import { startBrowser } from '../browser/startBrowser.js';
 
 async function getCurrencyRate({ browser, baseCurrency = 'USD', currency }) {
   if (!currency) {
@@ -23,7 +23,7 @@ async function getCurrencyRate({ browser, baseCurrency = 'USD', currency }) {
     ).evaluate((node) => node.getAttribute('data-last-price'));
 
     await page.close();
-    return { [`${currency}to${baseCurrency}`]: +lastPriceValue };
+    return { [currency]: lastPriceValue };
   } catch (error) {
     console.log('error', error);
   }
@@ -31,7 +31,7 @@ async function getCurrencyRate({ browser, baseCurrency = 'USD', currency }) {
 
 const baseCurrency = 'USD';
 
-const currencies = ['USD', 'EUR', 'KZT', 'THB', 'IDR', 'TRY', 'AED', 'RUB', 'GEL', 'GBP'];
+const currencies = ['EUR', 'KZT', 'THB', 'IDR', 'TRY', 'AED', 'RUB', 'GEL', 'GBP'];
 
 export async function getCurrenciesRates(req, res) {
   let browser;
@@ -41,9 +41,7 @@ export async function getCurrenciesRates(req, res) {
     browser = await startBrowser();
 
     currenciesRates = await Promise.all(
-      currencies
-        .filter((currency) => currency !== baseCurrency)
-        .map((currency) => getCurrencyRate({ browser, baseCurrency, currency }))
+      currencies.map((currency) => getCurrencyRate({ browser, baseCurrency, currency }))
     );
   } catch (err) {
     console.error(err);
@@ -53,5 +51,5 @@ export async function getCurrenciesRates(req, res) {
     }
   }
 
-  res.json(currenciesRates);
+  res.json([{ [baseCurrency]: '1' }, ...currenciesRates]);
 }
