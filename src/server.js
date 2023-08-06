@@ -1,6 +1,7 @@
 import express from 'express';
 import createError from 'http-errors';
 import compression from 'compression';
+import helmet from 'helmet';
 
 import {connectToDb} from './db/connectToDb.js';
 import currencyRouter from './routes/currency.router.js';
@@ -13,6 +14,7 @@ connectToDb();
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(compression());
+app.use(helmet());
 
 app.use('/currencies', currencyRouter);
 
