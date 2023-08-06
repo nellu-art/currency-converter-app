@@ -6,7 +6,6 @@ const defaultBaseCurrency = 'USD';
 const currencies = ['EUR', 'KZT', 'THB', 'IDR', 'TRY', 'AED', 'RUB', 'GEL', 'GBP'];
 const ONE_HOUR = 1000 * 60 * 60;
 
-
 async function getCurrencyRate({ browser, baseCurrency = 'USD', currency }) {
   if (!currency) {
     throw new Error('currency parameter is missing');
@@ -74,10 +73,10 @@ async function getCurrencyRatesFromDb(req, res, next) {
 export async function getCurrenciesRates(req, res, next) {
   const data = await getCurrencyRatesFromDb(req, res, next);
 
-  if (!data.updatedAt || Date.now() - data.updatedAt > ONE_HOUR) {
+  if (!data.updatedAt || new Date() - data.updatedAt > ONE_HOUR) {
     const googleData = await getCurrencyRatesFromGoogle(req, res, next);
     data.currencies = googleData;
-    data.updatedAt = Date.now();
+    data.updatedAt = new Date();
     try {
       await Record.findOneAndUpdate({
         createdAt: data.createdAt,
