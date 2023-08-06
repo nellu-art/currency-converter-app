@@ -2,12 +2,17 @@ import express from 'express';
 import createError from 'http-errors';
 import compression from 'compression';
 import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
 
 import {connectToDb} from './db/connectToDb.js';
 import currencyRouter from './routes/currency.router.js';
 
 const app = express();
 const port = 5000;
+const limiter = rateLimit({
+  windowMs: 1 * 60 * 1000, // 1 minute
+  max: 20,
+});
 
 connectToDb();
 
@@ -15,6 +20,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(compression());
 app.use(helmet());
+app.use(limiter);
 
 app.use('/currencies', currencyRouter);
 
