@@ -9,13 +9,6 @@ const port = 5000;
 
 connectToDb();
 
-app.use((req, res, next) => {
-  const start = Date.now();
-  next();
-  const delta = Date.now() - start;
-  console.log(`${req.method} ${req.baseUrl}${req.url} ${delta}ms`);
-});
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
@@ -38,6 +31,4 @@ app.use(function (err, req, res, next) {
 })
 });
 
-app.listen(port, () => {
-  console.log(`Server is listening on ${port}`);
-});
+app.listen(port);
