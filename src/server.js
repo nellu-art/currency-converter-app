@@ -37,7 +37,7 @@ app.use(function (err, req, res, next) {
     success: false,
     status: errStatus,
     message: errMsg,
-    error: req.app.get('env') === 'development' ? {...err, stack: err.stack} : {...err}
+    error: req.app.get('env') === 'development' ? {...err, stack: err.stack} : {}
 })
 });
 
