@@ -10,6 +10,6 @@ export async function startBrowser() {
     });
     return browser;
   } catch (err) {
-    console.log('Could not create a browser instance => : ', err);
+    throw new Error('Could not create a browser instance => : ', err);
   }
 }
