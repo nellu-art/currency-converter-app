@@ -1,10 +1,13 @@
 import express from 'express';
 import createError from 'http-errors';
 
+import {connectToDb} from './db/connectToDb.js';
 import currencyRouter from './routes/currency.router.js';
 
 const app = express();
 const port = 5000;
+
+connectToDb();
 
 app.use((req, res, next) => {
   const start = Date.now();

@@ -1,5 +1,11 @@
 import { createPage } from '../browser/createPage.js';
 import { startBrowser } from '../browser/startBrowser.js';
+import { Record } from '../db/record.model.js';
+
+const defaultBaseCurrency = 'USD';
+const currencies = ['EUR', 'KZT', 'THB', 'IDR', 'TRY', 'AED', 'RUB', 'GEL', 'GBP'];
+const ONE_HOUR = 1000 * 60 * 60;
+
 
 async function getCurrencyRate({ browser, baseCurrency = 'USD', currency }) {
   if (!currency) {
@@ -23,17 +29,13 @@ async function getCurrencyRate({ browser, baseCurrency = 'USD', currency }) {
     ).evaluate((node) => node.getAttribute('data-last-price'));
 
     await page.close();
-    return { [currency]: lastPriceValue };
+    return { name: currency, value: lastPriceValue };
   } catch (error) {
-    console.log('error', error);
+    throw new Error(`Error getting currency rate for ${currency}: ${error}`);
   }
 }
 
-const baseCurrency = 'USD';
-
-const currencies = ['EUR', 'KZT', 'THB', 'IDR', 'TRY', 'AED', 'RUB', 'GEL', 'GBP'];
-
-export async function getCurrenciesRates(req, res) {
+async function getCurrencyRatesFromGoogle(req, res, next) {
   let browser;
   let currenciesRates;
 
@@ -41,15 +43,49 @@ export async function getCurrenciesRates(req, res) {
     browser = await startBrowser();
 
     currenciesRates = await Promise.all(
-      currencies.map((currency) => getCurrencyRate({ browser, baseCurrency, currency }))
+      currencies.map((currency) => getCurrencyRate({ browser, baseCurrency: defaultBaseCurrency, currency }))
     );
   } catch (err) {
-    console.error(err);
+    return next(err);
   } finally {
     if (browser) {
       await browser.close();
     }
   }
 
-  res.json([{ [baseCurrency]: '1' }, ...currenciesRates]);
+  return [{ name: defaultBaseCurrency, value: '1' }].concat(currenciesRates);
+}
+
+async function getCurrencyRatesFromDb(req, res, next) {
+  try {
+    const records = await Record.find().sort({ createdAt: -1 }).limit(1);
+    if (!records.length) {
+      return { currencies: [], updatedAt: null };
+    }
+
+    const { currencies, updatedAt, createdAt } = records[0];
+
+    return { currencies, updatedAt, createdAt }
+  } catch (err) {
+    return next(err);
+  }
+}
+
+export async function getCurrenciesRates(req, res, next) {
+  const data = await getCurrencyRatesFromDb(req, res, next);
+
+  if (!data.updatedAt || Date.now() - data.updatedAt > ONE_HOUR) {
+    const googleData = await getCurrencyRatesFromGoogle(req, res, next);
+    data.currencies = googleData;
+    data.updatedAt = Date.now();
+    try {
+      await Record.findOneAndUpdate({
+        createdAt: data.createdAt,
+      }, { currencies: googleData, updatedAt: data.updatedAt }, { upsert: true });
+    } catch (err) {
+      return next(err);
+    }
+  }
+
+  return res.json(data);
 }
