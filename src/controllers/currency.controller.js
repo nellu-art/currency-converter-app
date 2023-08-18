@@ -59,7 +59,7 @@ async function getCurrencyRatesFromDb(req, res, next) {
   try {
     const records = await Record.find().sort({ createdAt: -1 }).limit(1);
     if (!records.length) {
-      return { currencies: [], updatedAt: null };
+      return { currencies: [], updatedAt: null, createdAt: null };
     }
 
     const { currencies, updatedAt, createdAt } = records[0];
@@ -77,6 +77,7 @@ export async function getCurrenciesRates(req, res, next) {
     const googleData = await getCurrencyRatesFromGoogle(req, res, next);
     data.currencies = googleData;
     data.updatedAt = new Date();
+    data.createdAt = data.createdAt || new Date();
     try {
       await Record.findOneAndUpdate({
         createdAt: data.createdAt,
