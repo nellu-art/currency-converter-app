@@ -6,7 +6,7 @@ const defaultBaseCurrency = 'USD';
 const currencies = ['EUR', 'KZT', 'THB', 'IDR', 'TRY', 'AED', 'RUB', 'GEL', 'GBP'];
 const ONE_HOUR = 1000 * 60 * 60;
 
-async function getCurrencyRate({ browser, baseCurrency = 'USD', currency }) {
+async function getCurrencyRate({ browser, baseCurrency = defaultBaseCurrency, currency }) {
   if (!currency) {
     throw new Error('currency parameter is missing');
   }
@@ -41,9 +41,10 @@ async function getCurrencyRatesFromGoogle(req, res, next) {
   try {
     browser = await startBrowser();
 
-    currenciesRates = await Promise.all(
+    const results = await Promise.allSettled(
       currencies.map((currency) => getCurrencyRate({ browser, baseCurrency: defaultBaseCurrency, currency }))
     );
+    currenciesRates = results.reduce((res, current) => current.status === 'fulfilled' ? [...res, current.value] : res, []);
   } catch (err) {
     return next(err);
   } finally {
