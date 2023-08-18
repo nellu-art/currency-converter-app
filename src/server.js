@@ -4,9 +4,9 @@ import compression from 'compression';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 
-import {connectToDb} from './db/connectToDb.js';
+import { connectToDb } from './db/connectToDb.js';
 import currencyRouter from './routes/currency.router.js';
-import {setUpdateJob} from './controllers/setUpdateJob.js';
+import { setUpdateJob } from './controllers/setUpdateJob.js';
 
 const app = express();
 const port = 5000;
@@ -14,6 +14,7 @@ const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 20,
 });
+app.set('trust proxy', 2)
 
 connectToDb().then(() => {
   setUpdateJob();
@@ -24,7 +25,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(compression());
 app.use(helmet());
 app.use(limiter);
-app.set('trust proxy', 2)
 
 app.use('/currencies', currencyRouter);
 
@@ -41,8 +41,8 @@ app.use(function (err, req, res, next) {
     success: false,
     status: errStatus,
     message: errMsg,
-    error: req.app.get('env') === 'development' ? {...err, stack: err.stack} : {}
-})
+    error: req.app.get('env') === 'development' ? { ...err, stack: err.stack } : {}
+  })
 });
 
 app.listen(port);

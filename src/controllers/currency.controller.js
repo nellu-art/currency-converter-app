@@ -84,7 +84,7 @@ export async function updateCurrenciesRates() {
       createdAt: createdAt || new Date(),
     }, { currencies: googleData, updatedAt: new Date() }, { upsert: true });
   } catch (err) {
-    throw new Error(`Error updating currencies rates: ${err}`);
+    console.error(`Error updating currencies rates: ${err}`);
   }
 }
 
