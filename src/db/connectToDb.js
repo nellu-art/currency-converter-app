@@ -13,7 +13,7 @@ async function main() {
 }
 
 export function connectToDb() {
-  main().catch((err) => {
+  return main().catch((err) => {
     console.error(err);
     process.exit(1);
   });

@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 
 import {connectToDb} from './db/connectToDb.js';
 import currencyRouter from './routes/currency.router.js';
+import {setUpdateJob} from './controllers/setUpdateJob.js';
 
 const app = express();
 const port = 5000;
@@ -14,7 +15,9 @@ const limiter = rateLimit({
   max: 20,
 });
 
-connectToDb();
+connectToDb().then(() => {
+  setUpdateJob();
+});
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

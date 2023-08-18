@@ -4,7 +4,6 @@ import { Record } from '../db/record.model.js';
 
 const defaultBaseCurrency = 'USD';
 const currencies = ['EUR', 'KZT', 'THB', 'IDR', 'TRY', 'AED', 'RUB', 'GEL', 'GBP'];
-const ONE_HOUR = 1000 * 60 * 60;
 
 async function getCurrencyRate({ browser, baseCurrency = defaultBaseCurrency, currency }) {
   if (!currency) {
@@ -34,7 +33,7 @@ async function getCurrencyRate({ browser, baseCurrency = defaultBaseCurrency, cu
   }
 }
 
-async function getCurrencyRatesFromGoogle(req, res, next) {
+async function getCurrencyRatesFromGoogle(next) {
   let browser;
   let currenciesRates;
 
@@ -46,7 +45,10 @@ async function getCurrencyRatesFromGoogle(req, res, next) {
     );
     currenciesRates = results.reduce((res, current) => current.status === 'fulfilled' ? [...res, current.value] : res, []);
   } catch (err) {
-    return next(err);
+    if (next) {
+      return next(err);
+    }
+    throw new Error(`Error getting currency rates: ${err}`);
   } finally {
     if (browser) {
       await browser.close();
@@ -71,22 +73,34 @@ async function getCurrencyRatesFromDb(req, res, next) {
   }
 }
 
-export async function getCurrenciesRates(req, res, next) {
-  const data = await getCurrencyRatesFromDb(req, res, next);
+export async function updateCurrenciesRates() {
+  try {
+    const googleData = await getCurrencyRatesFromGoogle();
+    const records = await Record.find().sort({ createdAt: -1 }).limit(1);
 
-  if (!data.updatedAt || new Date() - data.updatedAt > ONE_HOUR) {
-    const googleData = await getCurrencyRatesFromGoogle(req, res, next);
-    data.currencies = googleData;
-    data.updatedAt = new Date();
-    data.createdAt = data.createdAt || new Date();
-    try {
-      await Record.findOneAndUpdate({
-        createdAt: data.createdAt,
-      }, { currencies: googleData, updatedAt: data.updatedAt }, { upsert: true });
-    } catch (err) {
-      return next(err);
-    }
+    const { createdAt } = records[0] ?? {}
+
+    await Record.findOneAndUpdate({
+      createdAt: createdAt || new Date(),
+    }, { currencies: googleData, updatedAt: new Date() }, { upsert: true });
+  } catch (err) {
+    throw new Error(`Error updating currencies rates: ${err}`);
   }
+}
 
-  return res.json(data);
+export async function getCurrenciesRates(req, res, next) {
+  try {
+    const data = await getCurrencyRatesFromDb(req, res, next);
+
+    if (!data.updatedAt || !data.createdAt || !data.currencies.length) {
+      const googleData = await getCurrencyRatesFromGoogle(next);
+      data.currencies = googleData;
+      data.updatedAt = new Date();
+      data.createdAt = data.createdAt || new Date();
+    }
+
+    return res.json(data);
+  } catch (err) {
+    return next(err);
+  }
 }
