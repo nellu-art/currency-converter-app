@@ -24,10 +24,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(compression());
 app.use(helmet());
 app.use(limiter);
-
 app.set('trust proxy', 2)
-app.get('/ip', (request, response) => response.send(request.ip))
-app.get('/x-forwarded-for', (request, response) => response.send(request.headers['x-forwarded-for']))
+
 app.use('/currencies', currencyRouter);
 
 // catch 404 and forward to error handler
