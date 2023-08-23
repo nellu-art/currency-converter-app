@@ -3,7 +3,7 @@ import { startBrowser } from '../browser/startBrowser.js';
 import { Record } from '../db/record.model.js';
 
 const defaultBaseCurrency = 'USD';
-const currencies = ['EUR', 'KZT', 'THB', 'IDR', 'TRY', 'AED', 'RUB', 'GEL', 'GBP'];
+const currencies = ['EUR', 'KZT', 'THB', 'IDR', 'MYR', 'TRY', 'AED', 'RUB', 'GEL', 'GBP'];
 
 async function getCurrencyRate({ browser, baseCurrency = defaultBaseCurrency, currency }) {
   if (!currency) {
