@@ -1,4 +1,6 @@
 import schedule from 'node-schedule'
+import { IS_PRODUCTION } from '../constants/isProduction.js';
+
 import { updateCurrenciesRates } from './currency.controller.js'
 
 const rule = new schedule.RecurrenceRule();
@@ -8,5 +10,9 @@ rule.minute = 0;
 rule.dayOfWeek = [new schedule.Range(1, 5)];
 
 export function setUpdateJob() {
+  if (!IS_PRODUCTION) {
+    return;
+  }
+  
   schedule.scheduleJob(rule, updateCurrenciesRates);
 }

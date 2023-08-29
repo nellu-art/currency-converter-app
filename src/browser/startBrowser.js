@@ -1,9 +1,8 @@
 import puppeteer from 'puppeteer-extra';
 import StealthPlugin from 'puppeteer-extra-plugin-stealth';
+import { IS_PRODUCTION } from '../constants/isProduction.js';
 
 puppeteer.use(StealthPlugin());
-
-const IS_PRODUCTION = process.env.NODE_ENV === 'production';
 
 export async function startBrowser() {
   try {
