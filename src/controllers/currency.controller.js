@@ -1,9 +1,8 @@
 import { createPage } from '../browser/createPage.js';
 import { startBrowser } from '../browser/startBrowser.js';
 import { Record } from '../db/record.model.js';
+import { currencies, defaultBaseCurrency } from '../constants/currencies.js';
 
-const defaultBaseCurrency = 'USD';
-const currencies = ['EUR', 'KZT', 'THB', 'IDR', 'MYR', 'TRY', 'AED', 'RUB', 'GEL', 'GBP'];
 
 async function getCurrencyRate({ browser, baseCurrency = defaultBaseCurrency, currency }) {
   if (!currency) {
@@ -21,7 +20,6 @@ async function getCurrencyRate({ browser, baseCurrency = defaultBaseCurrency, cu
       waitUntil: 'domcontentloaded',
     });
 
-    await page.waitForSelector(`div[data-target="${currency}"]`);
     const lastPriceValue = await (
       await page.$(`div[data-target="${currency}"]`)
     ).evaluate((node) => node.getAttribute('data-last-price'));

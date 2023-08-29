@@ -10,7 +10,7 @@ export async function startBrowser() {
     const browser = IS_PRODUCTION ? await puppeteer.connect({
       browserWSEndpoint: `wss://chrome.browserless.io?token=${process.env.BROWSERLESS_TOKEN}`
     }) : await puppeteer.launch({
-      headless: 'new',
+      headless: IS_PRODUCTION ? 'new' : false,
     });
     return browser;
   } catch (err) {
