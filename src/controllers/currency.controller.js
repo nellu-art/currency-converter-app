@@ -1,30 +1,6 @@
-import { startBrowser } from '../browser/startBrowser.js';
 import { Record } from '../db/record.model.js';
-import { CURRENCIES, defaultBaseCurrency, currenciesWithCountry } from '../constants/currencies.js';
-import { runPromisesInSequence, getCurrencyRate } from './utils.js'
-
-const stackSize = 17
-
-async function getCurrencyRatesFromGoogle(userCurrencies = CURRENCIES) {
-  let browser;
-  let currenciesRates;
-
-  try {
-    browser = await startBrowser();
-
-    const results = await runPromisesInSequence(userCurrencies, stackSize, (currency) => getCurrencyRate({ browser, baseCurrency: defaultBaseCurrency, currency }))
-
-    currenciesRates = results.reduce((res, current) => current.status === 'fulfilled' ? [...res, current.value] : res, []);
-  } catch (err) {
-    throw new Error(`Error getting currency rates: ${err}`);
-  } finally {
-    if (browser) {
-      await browser.close();
-    }
-  }
-
-  return [{ name: defaultBaseCurrency, value: '1' }].concat(currenciesRates);
-}
+import { currenciesWithCountry } from '../constants/currencies.js';
+import { getCurrencyRatesFromGoogle } from './utils.js';
 
 async function getCurrencyRatesFromDb() {
   try {
@@ -38,21 +14,6 @@ async function getCurrencyRatesFromDb() {
     return { currencies, updatedAt, createdAt }
   } catch (err) {
     throw new Error(`Error getting currency rates from db: ${err}`);
-  }
-}
-
-export async function updateCurrenciesRates() {
-  try {
-    const googleData = await getCurrencyRatesFromGoogle();
-    const records = await Record.find().sort({ createdAt: -1 }).limit(1);
-
-    const { createdAt } = records[0] ?? {}
-
-    await Record.findOneAndUpdate({
-      createdAt: createdAt || new Date(),
-    }, { currencies: googleData, updatedAt: new Date() }, { upsert: true });
-  } catch (err) {
-    console.error(`Error updating currencies rates: ${err}`);
   }
 }
 

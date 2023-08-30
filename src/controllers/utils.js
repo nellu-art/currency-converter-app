@@ -1,6 +1,10 @@
 import { createPage } from '../browser/createPage.js';
+import { startBrowser } from '../browser/startBrowser.js';
+import { CURRENCIES, defaultBaseCurrency } from '../constants/currencies.js';
 
-export async function runPromisesInSequence(data, parallelCount, createPromise) {
+const stackSize = 17
+
+async function runPromisesInSequence(data, parallelCount, createPromise) {
   const result = [];
   for (let i = 0; i < data.length; i += parallelCount) {
     const chunk = data.slice(i, i + parallelCount);
@@ -9,7 +13,7 @@ export async function runPromisesInSequence(data, parallelCount, createPromise) 
   return result;
 }
 
-export async function getCurrencyRate({ browser, baseCurrency, currency }) {
+async function getCurrencyRate({ browser, baseCurrency, currency }) {
   if (!currency) {
     throw new Error('currency parameter is missing');
   }
@@ -36,4 +40,25 @@ export async function getCurrencyRate({ browser, baseCurrency, currency }) {
   } catch (error) {
     throw new Error(`Error getting currency rate for ${currency}: ${error}`);
   }
+}
+
+export async function getCurrencyRatesFromGoogle(userCurrencies = CURRENCIES) {
+  let browser;
+  let currenciesRates;
+
+  try {
+    browser = await startBrowser();
+
+    const results = await runPromisesInSequence(userCurrencies, stackSize, (currency) => getCurrencyRate({ browser, baseCurrency: defaultBaseCurrency, currency }))
+
+    currenciesRates = results.reduce((res, current) => current.status === 'fulfilled' ? [...res, current.value] : res, []);
+  } catch (err) {
+    throw new Error(`Error getting currency rates: ${err}`);
+  } finally {
+    if (browser) {
+      await browser.close();
+    }
+  }
+
+  return [{ name: defaultBaseCurrency, value: '1' }].concat(currenciesRates);
 }
