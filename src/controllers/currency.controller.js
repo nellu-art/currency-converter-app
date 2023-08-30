@@ -3,7 +3,7 @@ import { Record } from '../db/record.model.js';
 import { currencies, defaultBaseCurrency } from '../constants/currencies.js';
 import { runPromisesInSequence, getCurrencyRate } from './utils.js'
 
-const stackSize = 20
+const stackSize = 17
 
 async function getCurrencyRatesFromGoogle(next) {
   let browser;
