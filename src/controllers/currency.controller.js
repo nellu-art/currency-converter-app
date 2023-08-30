@@ -3,14 +3,14 @@ import { Record } from '../db/record.model.js';
 import { currencies, defaultBaseCurrency } from '../constants/currencies.js';
 import { runPromisesInSequence, getCurrencyRate } from './utils.js'
 
+const stackSize = 20
+
 async function getCurrencyRatesFromGoogle(next) {
   let browser;
   let currenciesRates;
 
   try {
     browser = await startBrowser();
-
-    const stackSize = 20
 
     const results = await runPromisesInSequence(currencies, stackSize, (currency) => getCurrencyRate({ browser, baseCurrency: defaultBaseCurrency, currency }))
 
