@@ -26,6 +26,10 @@ app.use(compression());
 app.use(helmet());
 app.use(limiter);
 
+app.get('/', (_, res) => {
+  return res.redirect('/currencies/list');
+})
+
 app.use('/currencies', currencyRouter);
 
 // catch 404 and forward to error handler

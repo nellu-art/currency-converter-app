@@ -1,6 +1,6 @@
 import { startBrowser } from '../browser/startBrowser.js';
 import { Record } from '../db/record.model.js';
-import { currencies, defaultBaseCurrency } from '../constants/currencies.js';
+import { currencies, defaultBaseCurrency, currenciesWithCountry } from '../constants/currencies.js';
 import { runPromisesInSequence, getCurrencyRate } from './utils.js'
 
 const stackSize = 17
@@ -71,6 +71,14 @@ export async function getCurrenciesRates(req, res, next) {
     }
 
     return res.json(data);
+  } catch (err) {
+    return next(err);
+  }
+}
+
+export async function getAllCurrencies(req, res, next) {
+  try {
+    return res.json({ data: currenciesWithCountry });
   } catch (err) {
     return next(err);
   }
