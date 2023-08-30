@@ -271,9 +271,6 @@ const EuropeCurrencies = [
   }
 ]
 
-export const currencies = [
-  ...AsiaCurrencies.map(({ currency }) => currency),
-  ...EuropeCurrencies.map(({ currency }) => currency),
-]
+export const currencies = AsiaCurrencies.map(({ currency }) => currency).concat(EuropeCurrencies.map(({ currency }) => currency));
 
 export const currenciesWithCountry = [{ currency: defaultBaseCurrency, country: 'United States' }].concat(AsiaCurrencies).concat(EuropeCurrencies);
