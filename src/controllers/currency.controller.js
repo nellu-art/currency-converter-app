@@ -1,35 +1,7 @@
-import { createPage } from '../browser/createPage.js';
 import { startBrowser } from '../browser/startBrowser.js';
 import { Record } from '../db/record.model.js';
 import { currencies, defaultBaseCurrency } from '../constants/currencies.js';
-
-
-async function getCurrencyRate({ browser, baseCurrency = defaultBaseCurrency, currency }) {
-  if (!currency) {
-    throw new Error('currency parameter is missing');
-  }
-  if (!browser) {
-    throw new Error('browser is missing');
-  }
-
-  const url = `https://www.google.com/finance/quote/${baseCurrency}-${currency}`;
-
-  try {
-    const page = await createPage(browser);
-    await page.goto(url, {
-      waitUntil: 'domcontentloaded',
-    });
-
-    const lastPriceValue = await (
-      await page.$(`div[data-target="${currency}"]`)
-    ).evaluate((node) => node.getAttribute('data-last-price'));
-
-    await page.close();
-    return { name: currency, value: lastPriceValue };
-  } catch (error) {
-    throw new Error(`Error getting currency rate for ${currency}: ${error}`);
-  }
-}
+import { runPromisesInSequence, getCurrencyRate } from './utils.js'
 
 async function getCurrencyRatesFromGoogle(next) {
   let browser;
@@ -38,9 +10,10 @@ async function getCurrencyRatesFromGoogle(next) {
   try {
     browser = await startBrowser();
 
-    const results = await Promise.allSettled(
-      currencies.map((currency) => getCurrencyRate({ browser, baseCurrency: defaultBaseCurrency, currency }))
-    );
+    const stackSize = 20
+
+    const results = await runPromisesInSequence(currencies, stackSize, (currency) => getCurrencyRate({ browser, baseCurrency: defaultBaseCurrency, currency }))
+
     currenciesRates = results.reduce((res, current) => current.status === 'fulfilled' ? [...res, current.value] : res, []);
   } catch (err) {
     if (next) {
