@@ -4,8 +4,11 @@
   "type": "module",
   "description": "The currency exchange application",
   "main": "index.js",
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
-    "start": "node -r dotenv/config src/server.js",
+    "start": "node src/server.js",
     "devstart": "nodemon -r dotenv/config src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
