@@ -7,6 +7,7 @@ import rateLimit from 'express-rate-limit';
 import { connectToDb } from './db/connectToDb.js';
 import currencyRouter from './routes/currency.router.js';
 import { setUpdateJob } from './controllers/setUpdateJob.js';
+import { authenticateKey } from './utils/apiAuth.js';
 
 const app = express();
 const port = 5000;
@@ -30,7 +31,7 @@ app.get('/', (_, res) => {
   return res.redirect('/currencies/list');
 })
 
-app.use('/currencies', currencyRouter);
+app.use('/currencies', authenticateKey, currencyRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
