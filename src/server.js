@@ -10,7 +10,7 @@ import { setUpdateJob } from './controllers/setUpdateJob.js';
 import { authenticateKey } from './utils/apiAuth.js';
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 20,
@@ -50,6 +50,4 @@ app.use(function (err, req, res, next) {
   })
 });
 
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
-});
+app.listen(port, "0.0.0.0");
