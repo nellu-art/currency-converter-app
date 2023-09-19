@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors'
 import createError from 'http-errors';
 import compression from 'compression';
 import helmet from 'helmet';
@@ -21,6 +22,9 @@ connectToDb().then(() => {
   setUpdateJob();
 });
 
+app.use(cors({
+  origin: '*'
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(compression());
