@@ -16,7 +16,8 @@ const limiter = rateLimit({
   windowMs: 1 * 60 * 1000, // 1 minute
   max: 20,
 });
-app.set('trust proxy', 2)
+// TODO: set proxy 
+// app.set('trust proxy', 2)
 
 connectToDb().then(() => {
   setUpdateJob();
@@ -54,4 +55,8 @@ app.use(function (err, req, res, next) {
   })
 });
 
-app.listen(port, "0.0.0.0");
+app.listen(port, () => {
+  console.log(`API listening on PORT ${port} `)  
+});
+
+module.exports = app
