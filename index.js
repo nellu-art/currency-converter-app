@@ -5,10 +5,10 @@ import compression from 'compression';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 
-import { connectToDb } from './db/connectToDb.js';
-import currencyRouter from './routes/currency.router.js';
-import { setUpdateJob } from './controllers/setUpdateJob.js';
-import { authenticateKey } from './utils/apiAuth.js';
+import { connectToDb } from './src/db/connectToDb.js';
+import currencyRouter from './src/routes/currency.router.js';
+import { setUpdateJob } from './src/controllers/setUpdateJob.js';
+import { authenticateKey } from './src/utils/apiAuth.js';
 
 const app = express();
 const port = process.env.PORT || 5000;
