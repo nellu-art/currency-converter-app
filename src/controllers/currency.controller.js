@@ -1,15 +1,15 @@
-import { Record } from '../db/record.model.js';
 import { currenciesWithCountry } from '../constants/currencies.js';
 import { getCurrencyRatesFromGoogle } from './utils.js';
+import { getRecords } from '../db/index.js';
 
 async function getCurrencyRatesFromDb() {
   try {
-    const records = await Record.find().sort({ createdAt: -1 }).limit(1);
-    if (!records.length) {
+    const data = getRecords();
+    if (!data.records.length) {
       return { currencies: [], updatedAt: null, createdAt: null };
     }
 
-    const { currencies, updatedAt, createdAt } = records[0];
+    const { currencies, updatedAt, createdAt } = data.records[0];
 
     return { currencies, updatedAt, createdAt }
   } catch (err) {

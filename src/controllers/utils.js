@@ -32,8 +32,18 @@ async function getCurrencyRate({ browser, baseCurrency, currency }) {
       waitUntil: 'domcontentloaded',
     });
 
+    try {
+      // Wait for the cookies dialog to appear and click the "Accept all" button
+      await page.waitForSelector('button[aria-label="Accept all"]', { timeout: 1000 });
+      await page.click('button[aria-label="Accept all"]');
+    } catch (error) {
+      // console.log('Cookies dialog not found or already accepted.');
+    }
+
     const target = await page.waitForSelector(`div[data-target="${currency}"]`);
     const lastPriceValue = await page.evaluate((node) => node.getAttribute('data-last-price'), target);
+
+    console.log(`Got currency rate for ${currency}: ${lastPriceValue}`);
 
     await page.close();
     return { name: currency, value: lastPriceValue };
