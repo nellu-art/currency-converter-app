@@ -1,12 +1,9 @@
-import express from 'express';
-
 import { updateCurrenciesRates } from './controllers/updateCurrenciesRates.js';
 
-const app = express();
-const port = 3000;
+const main = async () => {
+    console.log('Starting updating currencies rates...');
+    await updateCurrenciesRates();
+    console.log('Currencies rates updated successfully!');
+};
 
-app.listen(port, () => {
-    console.log(`Server is listening on port ${port}`);
-
-    updateCurrenciesRates();
-});
+main();
