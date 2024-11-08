@@ -8,8 +8,6 @@ export async function updateCurrenciesRates() {
 
         const { createdAt } = data.records[0] ?? {};
 
-        console.log('Updating currencies rates...', googleData);
-
         updateRecords({
             currencies: googleData,
             updatedAt: new Date(),
