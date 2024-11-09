@@ -50,7 +50,9 @@ async function getCurrencyRate({ browser, baseCurrency, currency }) {
 
         return { name: currency, value: lastPriceValue };
     } catch (error) {
-        throw new Error(`Error getting currency rate for ${currency}: ${error}`);
+        const errorMessage = `Error getting currency rate for ${currency}: ${error?.message || error}`;
+        console.error(errorMessage);
+        throw new Error(errorMessage);
     } finally {
         if (page) {
             await page.close();
