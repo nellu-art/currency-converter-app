@@ -6,10 +6,6 @@ const AsiaCurrencies = [
         country: 'Afghanistan',
     },
     {
-        currency: 'AMD',
-        country: 'Artsakh',
-    },
-    {
         currency: 'AZN',
         country: 'Azerbaijan',
     },
@@ -67,7 +63,7 @@ const AsiaCurrencies = [
     },
     {
         currency: 'ILS',
-        country: 'Palestine',
+        country: 'Israel',
     },
     {
         currency: 'JPY',
@@ -116,10 +112,6 @@ const AsiaCurrencies = [
     {
         currency: 'NPR',
         country: 'Nepal',
-    },
-    {
-        currency: 'TRY',
-        country: 'Turkey',
     },
     {
         currency: 'OMR',
@@ -267,6 +259,10 @@ const EuropeCurrencies = [
     {
         currency: 'UAH',
         country: 'Ukraine',
+    },
+    {
+        currency: 'TRY',
+        country: 'Turkey',
     },
 ];
 
