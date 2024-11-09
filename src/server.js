@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import { updateCurrenciesRates } from './controllers/updateCurrenciesRates.js';
 
 const main = async () => {
