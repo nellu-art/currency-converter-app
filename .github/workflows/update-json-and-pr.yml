@@ -1,4 +1,4 @@
-name: Update JSON and Create Pull Request
+name: Currency Rates Update
 
 on:
     schedule:
