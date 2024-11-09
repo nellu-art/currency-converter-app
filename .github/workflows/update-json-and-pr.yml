@@ -12,6 +12,9 @@ on:
 jobs:
     update-json:
         runs-on: ubuntu-latest
+        env:
+            NODE_ENV: production
+            BROWSERLESS_TOKEN: ${{ secrets.BROWSERLESS_TOKEN }}
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
