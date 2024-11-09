@@ -1,0 +1,277 @@
+{
+  "records": [
+    {
+      "currencies": [
+        {
+          "name": "USD",
+          "value": "1"
+        },
+        {
+          "name": "AFN",
+          "value": "68"
+        },
+        {
+          "name": "AMD",
+          "value": "385.172997"
+        },
+        {
+          "name": "AZN",
+          "value": "1.7"
+        },
+        {
+          "name": "BHD",
+          "value": "0.376902936"
+        },
+        {
+          "name": "BDT",
+          "value": "119.55730000000001"
+        },
+        {
+          "name": "BTN",
+          "value": "84.41191"
+        },
+        {
+          "name": "BND",
+          "value": "1.32200918"
+        },
+        {
+          "name": "KHR",
+          "value": "4070"
+        },
+        {
+          "name": "CNY",
+          "value": "7.17919928"
+        },
+        {
+          "name": "AUD",
+          "value": "1.51952591"
+        },
+        {
+          "name": "GEL",
+          "value": "2.7199999999999998"
+        },
+        {
+          "name": "HKD",
+          "value": "7.77455"
+        },
+        {
+          "name": "INR",
+          "value": "84.38315"
+        },
+        {
+          "name": "IDR",
+          "value": "15654.85"
+        },
+        {
+          "name": "IRR",
+          "value": "42092.5"
+        },
+        {
+          "name": "IQD",
+          "value": "1310"
+        },
+        {
+          "name": "ILS",
+          "value": "3.7498099999999996"
+        },
+        {
+          "name": "JPY",
+          "value": "152.645"
+        },
+        {
+          "name": "JOD",
+          "value": "0.7091"
+        },
+        {
+          "name": "KZT",
+          "value": "492.51088000000004"
+        },
+        {
+          "name": "KWD",
+          "value": "0.306510873"
+        },
+        {
+          "name": "KGS",
+          "value": "86.2"
+        },
+        {
+          "name": "LAK",
+          "value": "21930"
+        },
+        {
+          "name": "LBP",
+          "value": "90317.9191"
+        },
+        {
+          "name": "MOP",
+          "value": "8.0069308"
+        },
+        {
+          "name": "MYR",
+          "value": "4.38249928"
+        },
+        {
+          "name": "MVR",
+          "value": "15.450000000000001"
+        },
+        {
+          "name": "MMK",
+          "value": "3247.83199"
+        },
+        {
+          "name": "NPR",
+          "value": "135.04188299999998"
+        },
+        {
+          "name": "TRY",
+          "value": "34.372600399999996"
+        },
+        {
+          "name": "OMR",
+          "value": "0.3848184"
+        },
+        {
+          "name": "PKR",
+          "value": "278.05"
+        },
+        {
+          "name": "PHP",
+          "value": "58.455000000000005"
+        },
+        {
+          "name": "QAR",
+          "value": "3.6407499999999997"
+        },
+        {
+          "name": "SAR"
+        },
+        {
+          "name": "SGD",
+          "value": "1.3256999999999999"
+        },
+        {
+          "name": "KRW",
+          "value": "1398.2"
+        },
+        {
+          "name": "LKR",
+          "value": "292.7139"
+        },
+        {
+          "name": "TWD",
+          "value": "32.25"
+        },
+        {
+          "name": "TJS",
+          "value": "10.63546"
+        },
+        {
+          "name": "THB",
+          "value": "34.2149851"
+        },
+        {
+          "name": "TMT",
+          "value": "3.51"
+        },
+        {
+          "name": "AED",
+          "value": "3.673"
+        },
+        {
+          "name": "UZS",
+          "value": "12830"
+        },
+        {
+          "name": "VND",
+          "value": "25274.9919"
+        },
+        {
+          "name": "YER",
+          "value": "249.82119000000003"
+        },
+        {
+          "name": "EUR",
+          "value": "0.9326"
+        },
+        {
+          "name": "RUB",
+          "value": "97.5495552"
+        },
+        {
+          "name": "GBP",
+          "value": "0.7740537190000001"
+        },
+        {
+          "name": "ALL",
+          "value": "91.65"
+        },
+        {
+          "name": "BAM",
+          "value": "1.814622"
+        },
+        {
+          "name": "BGN",
+          "value": "1.824495"
+        },
+        {
+          "name": "BYN",
+          "value": "3.274262"
+        },
+        {
+          "name": "CHF",
+          "value": "0.8757644"
+        },
+        {
+          "name": "CZK",
+          "value": "23.5574"
+        },
+        {
+          "name": "DKK",
+          "value": "6.957"
+        },
+        {
+          "name": "HUF",
+          "value": "379.755"
+        },
+        {
+          "name": "ISK",
+          "value": "138.74"
+        },
+        {
+          "name": "MDL",
+          "value": "17.852361"
+        },
+        {
+          "name": "MKD",
+          "value": "57.30962"
+        },
+        {
+          "name": "NOK",
+          "value": "10.9998"
+        },
+        {
+          "name": "PLN",
+          "value": "4.03435"
+        },
+        {
+          "name": "RON",
+          "value": "4.64209451"
+        },
+        {
+          "name": "RSD",
+          "value": "109.096713"
+        },
+        {
+          "name": "SEK",
+          "value": "10.813300000000002"
+        },
+        {
+          "name": "UAH",
+          "value": "41.30384"
+        }
+      ],
+      "updatedAt": "2024-11-08T23:25:56.038Z",
+      "createdAt": "2024-11-08T09:35:14.099Z"
+    }
+  ]
+}
