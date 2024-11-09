@@ -2,6 +2,11 @@ export const defaultBaseCurrency = 'USD';
 
 const AsiaCurrencies = [
     {
+        // it is just an excepiion
+        currency: 'AUD',
+        country: 'Australia',
+    },
+    {
         currency: 'AFN',
         country: 'Afghanistan',
     },
@@ -32,10 +37,6 @@ const AsiaCurrencies = [
     {
         currency: 'CNY',
         country: 'China',
-    },
-    {
-        currency: 'AUD',
-        country: 'Australia',
     },
     {
         currency: 'GEL',
@@ -177,6 +178,14 @@ const AsiaCurrencies = [
         currency: 'YER',
         country: 'Yemen',
     },
+    {
+        currency: 'AMD',
+        country: 'Armenia',
+    },
+    {
+        currency: 'SYP',
+        country: 'Syria',
+    },
 ];
 
 const EuropeCurrencies = [
@@ -264,11 +273,48 @@ const EuropeCurrencies = [
         currency: 'TRY',
         country: 'Turkey',
     },
+    {
+        currency: 'EUR',
+        country: 'Andorra',
+    },
+    {
+        currency: 'EUR',
+        country: 'Kosovo',
+    },
+    {
+        currency: 'CHF',
+        country: 'Liechtenstein',
+    },
+    {
+        currency: 'EUR',
+        country: 'Malta',
+    },
+    {
+        currency: 'EUR',
+        country: 'Monaco',
+    },
+    {
+        currency: 'EUR',
+        country: 'Montenegro',
+    },
+    {
+        currency: 'EUR',
+        country: 'San Marino',
+    },
+    {
+        currency: 'EUR',
+        country: 'Vatican City',
+    },
 ];
 
-export const CURRENCIES = AsiaCurrencies.map(({ currency }) => currency).concat(
-    EuropeCurrencies.map(({ currency }) => currency),
-);
+export const CURRENCIES = AsiaCurrencies.map(({ currency }) => currency)
+    .concat(EuropeCurrencies.map(({ currency }) => currency))
+    .reduce((acc, currency) => {
+        if (!acc.includes(currency)) {
+            acc.push(currency);
+        }
+        return acc;
+    }, []);
 
 export const currenciesWithCountry = [{ currency: defaultBaseCurrency, country: 'United States' }]
     .concat(AsiaCurrencies)
