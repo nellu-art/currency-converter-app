@@ -2,11 +2,12 @@ name: Update JSON and Create Pull Request
 
 on:
     schedule:
-        # Run at 9:00, 12:00, 15:00, and 18:00 UTC from Monday to Friday (Saturday for testing)
-        - cron: '0 9 * * 1-6'
-        - cron: '0 12 * * 1-6'
-        - cron: '0 15 * * 1-6'
-        - cron: '0 18 * * 1-6'
+        # Run at 9:00, 12:00, 15:00, and 18:00 UTC from Monday to Friday
+        - cron: '0 9 * * 1-5'
+        - cron: '0 12 * * 1-5'
+        - cron: '0 15 * * 1-5'
+        - cron: '0 18 * * 1-5'
+    workflow_dispatch: # Add this line to enable manual triggering
 
 jobs:
     update-json:
