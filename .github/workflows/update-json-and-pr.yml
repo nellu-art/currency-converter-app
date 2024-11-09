@@ -8,6 +8,8 @@ on:
         - cron: '0 15 * * 1-5'
         - cron: '0 18 * * 1-5'
     workflow_dispatch: # Add this line to enable manual triggering
+    branches:
+        - data-update  #
 
 permissions:
     contents: write
