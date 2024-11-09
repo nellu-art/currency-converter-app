@@ -9,12 +9,16 @@ on:
         - cron: '0 18 * * 1-5'
     workflow_dispatch: # Add this line to enable manual triggering
 
+permissions:
+    contents: write
+
 jobs:
     update-json:
         runs-on: ubuntu-latest
         env:
             NODE_ENV: production
             BROWSERLESS_TOKEN: ${{ secrets.BROWSERLESS_TOKEN }}
+
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3
@@ -37,6 +41,8 @@ jobs:
                   git add .
                   git commit -m 'Update JSON file'
                   git push
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
             - name: Create Pull Request
               uses: peter-evans/create-pull-request@v5
