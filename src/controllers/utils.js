@@ -39,19 +39,22 @@ async function getCurrencyRate({ browser, baseCurrency, currency }) {
                 timeout: 1000,
             });
             await page.click('button[aria-label="Accept all"]');
-        } catch (error) {
-            // console.log('Cookies dialog not found or already accepted.');
-        }
+        } catch (error) {}
 
         let lastPriceValue;
-        try {
-            const target = await page.waitForSelector(`div[data-target="${currency}"]`, { timeout: 10000 });
-            lastPriceValue = await page.evaluate((node) => node.getAttribute('data-last-price'), target);
 
-            console.log(`Got currency rate for ${currency}: ${lastPriceValue}`);
-        } catch (error) {
-            console.log(`Error getting currency rate for ${currency}: ${error}`);
-        }
+        retry(async () => {
+            try {
+                const target = await page.waitForSelector(`div[data-target="${currency}"]`, { timeout: 3000 });
+                lastPriceValue = await page.evaluate((node) => node.getAttribute('data-last-price'), target);
+
+                console.log(`Got currency rate for ${currency}: ${lastPriceValue}`);
+            } catch (error) {
+                const errorText = `Error getting currency rate for ${currency}: ${error}`;
+                console.log(errorText);
+                throw new Error(errorText);
+            }
+        });
 
         return { name: currency, value: lastPriceValue };
     } catch (error) {
@@ -91,4 +94,14 @@ export async function getCurrencyRatesFromGoogle(userCurrencies = CURRENCIES) {
     }
 
     return [{ name: defaultBaseCurrency, value: '1' }].concat(currenciesRates);
+}
+
+async function retry(fn, retries = 3) {
+    try {
+        return await fn();
+    } catch (err) {
+        if (retries === 0) throw err;
+        await new Promise((r) => setTimeout(r, 1000));
+        return retry(fn, retries - 1);
+    }
 }

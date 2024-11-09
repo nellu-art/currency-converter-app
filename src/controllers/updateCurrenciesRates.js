@@ -6,10 +6,13 @@ export async function updateCurrenciesRates() {
         const googleData = await getCurrencyRatesFromGoogle();
         const data = getRecords();
 
-        const { createdAt } = data.records[0] ?? {};
+        const { createdAt, currencies } = data.records[0] ?? {};
 
         updateRecords({
-            currencies: googleData,
+            currencies: googleData.map(({ name, value }) => ({
+                name,
+                value: !value ? currencies.find((c) => c.name === name)?.value : value,
+            })),
             updatedAt: new Date(),
             createdAt: createdAt || new Date(),
         });
