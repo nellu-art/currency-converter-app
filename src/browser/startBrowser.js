@@ -6,7 +6,6 @@ export async function startBrowser() {
         if (IS_PRODUCTION) {
             // Production connection with launch arguments for stability
             const launchArgs = JSON.stringify({
-                args: ['--no-sandbox', '--disable-setuid-sandbox'],
                 // Using new headless mode
                 headless: 'new',
                 // Adding timeout for connection stability
@@ -14,7 +13,7 @@ export async function startBrowser() {
             });
 
             const browser = await puppeteer.connect({
-                browserWSEndpoint: `wss://chrome.browserless.io/?token=${process.env.BROWSERLESS_TOKEN}&proxy=residential&launch=${launchArgs}`,
+                browserWSEndpoint: `wss://chrome.browserless.io/?token=${process.env.BROWSERLESS_TOKEN}&launch=${launchArgs}`,
             });
             return browser;
         } else {
