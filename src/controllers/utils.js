@@ -30,6 +30,7 @@ async function getCurrencyRate({ browser, baseCurrency, currency }) {
 
     try {
         page = await createPage(browser);
+        await page.emulateTimezone('Europe/London');
 
         await page.goto(url, {
             waitUntil: 'domcontentloaded',

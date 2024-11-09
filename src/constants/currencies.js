@@ -182,10 +182,6 @@ const AsiaCurrencies = [
         currency: 'AMD',
         country: 'Armenia',
     },
-    {
-        currency: 'SYP',
-        country: 'Syria',
-    },
 ];
 
 const EuropeCurrencies = [
