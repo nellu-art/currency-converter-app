@@ -26,9 +26,11 @@ async function getCurrencyRate({ browser, baseCurrency, currency }) {
 
     const url = `https://www.google.com/finance/quote/${baseCurrency}-${currency}`;
     let page;
+    let lastPriceValue;
 
     try {
         page = await createPage(browser);
+
         await page.goto(url, {
             waitUntil: 'domcontentloaded',
         });
@@ -41,20 +43,10 @@ async function getCurrencyRate({ browser, baseCurrency, currency }) {
             await page.click('button[aria-label="Accept all"]');
         } catch (error) {}
 
-        let lastPriceValue;
+        const target = await page.waitForSelector(`div[data-target="${currency}"]`, { timeout: 3000 });
+        lastPriceValue = await page.evaluate((node) => node.getAttribute('data-last-price'), target);
 
-        retry(async () => {
-            try {
-                const target = await page.waitForSelector(`div[data-target="${currency}"]`, { timeout: 3000 });
-                lastPriceValue = await page.evaluate((node) => node.getAttribute('data-last-price'), target);
-
-                console.log(`Got currency rate for ${currency}: ${lastPriceValue}`);
-            } catch (error) {
-                const errorText = `Error getting currency rate for ${currency}: ${error}`;
-                console.log(errorText);
-                throw new Error(errorText);
-            }
-        });
+        console.log(`Got currency rate for ${currency}: ${lastPriceValue}`);
 
         return { name: currency, value: lastPriceValue };
     } catch (error) {
@@ -74,11 +66,13 @@ export async function getCurrencyRatesFromGoogle(userCurrencies = CURRENCIES) {
         browser = await startBrowser();
 
         const results = await runPromisesInSequence(userCurrencies, stackSize, (currency) =>
-            getCurrencyRate({
-                browser,
-                baseCurrency: defaultBaseCurrency,
-                currency,
-            }),
+            retry(() =>
+                getCurrencyRate({
+                    browser,
+                    baseCurrency: defaultBaseCurrency,
+                    currency,
+                }),
+            ),
         );
 
         currenciesRates = results.reduce(

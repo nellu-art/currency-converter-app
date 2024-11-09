@@ -19,8 +19,9 @@ export async function startBrowser() {
         } else {
             // Local development launch
             return await puppeteer.launch({
-                headless: 'new',
+                headless: false,
                 args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                executablePath: process.env.CHROME_EXECUTABLE_PATH,
             });
         }
     } catch (err) {
