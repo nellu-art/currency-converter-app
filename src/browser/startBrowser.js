@@ -14,7 +14,7 @@ export async function startBrowser() {
             });
 
             const browser = await puppeteer.connect({
-                browserWSEndpoint: `wss://production-sfo.browserless.io/?token=${process.env.BROWSERLESS_TOKEN}&proxy=residential&launch=${launchArgs}`,
+                browserWSEndpoint: `wss://chrome.browserless.io/?token=${process.env.BROWSERLESS_TOKEN}&proxy=residential&launch=${launchArgs}`,
             });
             return browser;
         } else {
