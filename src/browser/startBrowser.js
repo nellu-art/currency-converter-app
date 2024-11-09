@@ -3,16 +3,29 @@ import { IS_PRODUCTION } from '../constants/isProduction.js';
 
 export async function startBrowser() {
     try {
-        const browser = IS_PRODUCTION
-            ? await puppeteer.connect({
-                  browserWSEndpoint: `wss://production-sfo.browserless.io/?token=${process.env.BROWSERLESS_TOKEN}&proxy=residential`,
-              })
-            : await puppeteer.launch({
-                  // headless: IS_PRODUCTION ? 'new' : false,
-                  headless: true,
-              });
-        return browser;
+        if (IS_PRODUCTION) {
+            // Production connection with launch arguments for stability
+            const launchArgs = JSON.stringify({
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+                // Using new headless mode
+                headless: 'new',
+                // Adding timeout for connection stability
+                timeout: 30000,
+            });
+
+            const browser = await puppeteer.connect({
+                browserWSEndpoint: `wss://production-sfo.browserless.io/?token=${process.env.BROWSERLESS_TOKEN}&proxy=residential&launch=${launchArgs}`,
+            });
+            return browser;
+        } else {
+            // Local development launch
+            return await puppeteer.launch({
+                headless: 'new',
+                args: ['--no-sandbox', '--disable-setuid-sandbox'],
+            });
+        }
     } catch (err) {
-        throw new Error('Could not create a browser instance => : ', JSON.stringify(err));
+        console.error('Browser launch error:', err);
+        throw new Error(`Could not create a browser instance: ${err.message}`);
     }
 }
