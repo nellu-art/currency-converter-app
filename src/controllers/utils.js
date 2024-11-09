@@ -25,9 +25,10 @@ async function getCurrencyRate({ browser, baseCurrency, currency }) {
     }
 
     const url = `https://www.google.com/finance/quote/${baseCurrency}-${currency}`;
+    let page;
 
     try {
-        const page = await createPage(browser);
+        page = await createPage(browser);
         await page.goto(url, {
             waitUntil: 'domcontentloaded',
         });
@@ -52,11 +53,13 @@ async function getCurrencyRate({ browser, baseCurrency, currency }) {
             console.log(`Error getting currency rate for ${currency}: ${error}`);
         }
 
-        await page.close();
-
         return { name: currency, value: lastPriceValue };
     } catch (error) {
         throw new Error(`Error getting currency rate for ${currency}: ${error}`);
+    } finally {
+        if (page) {
+            await page.close();
+        }
     }
 }
 
