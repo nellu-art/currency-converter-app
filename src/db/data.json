@@ -8,11 +8,11 @@
         },
         {
           "name": "AUD",
-          "value": "1.43986408"
+          "value": "1.42497845"
         },
         {
           "name": "AFN",
-          "value": "65.9393991"
+          "value": "66"
         },
         {
           "name": "AZN",
@@ -20,7 +20,7 @@
         },
         {
           "name": "BHD",
-          "value": "0.376995721"
+          "value": "0.376957919"
         },
         {
           "name": "BDT",
@@ -28,19 +28,19 @@
         },
         {
           "name": "BTN",
-          "value": "91.5364484"
+          "value": "91.84252"
         },
         {
           "name": "BND",
-          "value": "1.271584"
+          "value": "1.276711"
         },
         {
           "name": "KHR",
-          "value": "4025.5"
+          "value": "4044.97036"
         },
         {
           "name": "CNY",
-          "value": "6.9465"
+          "value": "6.94649945"
         },
         {
           "name": "GEL",
@@ -48,31 +48,31 @@
         },
         {
           "name": "HKD",
-          "value": "7.80997396"
+          "value": "7.812785"
         },
         {
           "name": "INR",
-          "value": "90.98385"
+          "value": "90.11015"
         },
         {
           "name": "IDR",
-          "value": "16775.9902"
+          "value": "16761.9865"
         },
         {
           "name": "IRR",
-          "value": "1164442"
+          "value": "1189712"
         },
         {
           "name": "IQD",
-          "value": "1311.397"
+          "value": "1315.67"
         },
         {
           "name": "ILS",
-          "value": "3.10084"
+          "value": "3.09168994"
         },
         {
           "name": "JPY",
-          "value": "155.6725"
+          "value": "155.6425"
         },
         {
           "name": "JOD",
@@ -80,7 +80,7 @@
         },
         {
           "name": "KZT",
-          "value": "505.515937"
+          "value": "507.1782"
         },
         {
           "name": "KWD",
@@ -92,23 +92,23 @@
         },
         {
           "name": "LAK",
-          "value": "21528.49"
+          "value": "21596.5929"
         },
         {
           "name": "LBP",
-          "value": "89647.27"
+          "value": "89531.9271"
         },
         {
           "name": "MOP",
-          "value": "8.053239"
+          "value": "8.07593315"
         },
         {
           "name": "MYR",
-          "value": "3.942"
+          "value": "3.92699867"
         },
         {
           "name": "MVR",
-          "value": "15.4574127"
+          "value": "15.45"
         },
         {
           "name": "MMK",
@@ -116,95 +116,95 @@
         },
         {
           "name": "NPR",
-          "value": "146.457272"
+          "value": "147.0626"
         },
         {
           "name": "OMR",
-          "value": "0.3845136"
+          "value": "0.3844682"
         },
         {
           "name": "PKR",
-          "value": "280.2208"
+          "value": "281.3412"
         },
         {
           "name": "PHP",
-          "value": "58.87"
+          "value": "59.033"
         },
         {
           "name": "QAR",
-          "value": "3.64099896"
+          "value": "3.64124953"
         },
         {
           "name": "SAR",
-          "value": "3.750212"
+          "value": "3.75006985"
         },
         {
           "name": "SGD",
-          "value": "1.273085"
+          "value": "1.269905"
         },
         {
           "name": "KRW",
-          "value": "1452.1"
+          "value": "1447.275"
         },
         {
           "name": "LKR",
-          "value": "309.97602"
+          "value": "311.0105"
         },
         {
           "name": "TWD",
-          "value": "31.5919932"
+          "value": "31.5603"
         },
         {
           "name": "TJS",
-          "value": "9.34863393"
+          "value": "9.37910336"
         },
         {
           "name": "THB",
-          "value": "31.6"
+          "value": "31.4745"
         },
         {
           "name": "TMT",
-          "value": "3.49357183"
+          "value": "3.51"
         },
         {
           "name": "AED",
-          "value": "3.673"
+          "value": "3.6724997"
         },
         {
           "name": "UZS",
-          "value": "12238.18"
+          "value": "12278.12"
         },
         {
           "name": "VND",
-          "value": "26019.9156"
+          "value": "25997.9982"
         },
         {
           "name": "YER",
-          "value": "238.325"
+          "value": "238.374704"
         },
         {
           "name": "AMD",
-          "value": "379.03"
+          "value": "378.455583"
         },
         {
           "name": "EUR",
-          "value": "0.84857"
+          "value": "0.846818925"
         },
         {
           "name": "RUB",
-          "value": "76.4509628"
+          "value": "76.79873"
         },
         {
           "name": "GBP",
-          "value": "0.732535"
+          "value": "0.730855"
         },
         {
           "name": "ALL",
-          "value": "81.5340135"
+          "value": "81.8610621"
         },
         {
           "name": "BAM",
-          "value": "1.650151"
+          "value": "1.65549237"
         },
         {
           "name": "BGN",
@@ -212,66 +212,66 @@
         },
         {
           "name": "BYN",
-          "value": "2.86645392"
+          "value": "2.87580767"
         },
         {
           "name": "CHF",
-          "value": "0.780955"
+          "value": "0.777697502"
         },
         {
           "name": "CZK",
-          "value": "20.6229"
+          "value": "20.57675"
         },
         {
           "name": "DKK",
-          "value": "6.33732839"
+          "value": "6.32475065"
         },
         {
           "name": "HUF",
-          "value": "323.231801"
+          "value": "322.3845"
         },
         {
           "name": "ISK",
-          "value": "123.2"
+          "value": "122.807502"
         },
         {
           "name": "MDL",
-          "value": "16.8095478"
+          "value": "16.934801"
         },
         {
           "name": "MKD",
-          "value": "52.2632605"
+          "value": "52.18617"
         },
         {
           "name": "NOK",
-          "value": "9.716505"
+          "value": "9.67395"
         },
         {
           "name": "PLN",
-          "value": "3.58233"
+          "value": "3.57358"
         },
         {
           "name": "RON",
-          "value": "4.3238"
+          "value": "4.31489407"
         },
         {
           "name": "RSD",
-          "value": "99.6469509"
+          "value": "99.4456897"
         },
         {
           "name": "SEK",
-          "value": "8.97678155"
+          "value": "8.92766"
         },
         {
           "name": "UAH",
-          "value": "43.1110485"
+          "value": "43.2835976"
         },
         {
           "name": "TRY",
-          "value": "43.4701905"
+          "value": "43.492935"
         }
       ],
-      "updatedAt": "2026-02-02T18:14:42.186Z",
+      "updatedAt": "2026-02-03T09:13:36.254Z",
       "createdAt": "2024-11-08T09:35:14.099Z"
     }
   ]
